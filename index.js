@@ -3,6 +3,7 @@ import Datastore from "nedb-promise";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { ensureAuthentication } from "./midleware/authentication.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -74,6 +75,18 @@ app.post("/api/auth/login", async (req, res) => {
     // const refreshToken = jwt.sign({ userId: user._id }, process.env.REFRESHTOKEN_SECRET, { subject: user.email, expiresIn: "1d" });
 
     return res.status(200).json({ id: user._id, name: user.name, accessToken });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+//  Get the current user
+
+app.get("/api/users/current", ensureAuthentication, async (req, res) => {
+  try {
+    const user = await users.findOne({ _id: req.user.id });
+
+    return res.status(200).json({ id: user._id, name: user.name, email: user.email });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
