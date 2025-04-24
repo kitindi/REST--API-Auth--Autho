@@ -1,3 +1,5 @@
 {"name":"dev2","email":"dev2@dev.com","password":"$2b$10$fAEEosDwy1u7./1iykwsXexf1K1zykCIefMAW29mZQVulnrKeJA.u","_id":"6SpPFxQoyneoOuUf"}
+{"name":"devdev","email":"devdev@dev.com","password":"$2b$10$te2rj163M0Fe.sMukhDxge/eOMYC1zgEeehzTk3fFWOEkono3hISa","role":"admin","_id":"G1eGdQ6A64hkjT8h"}
+{"name":"dev4","email":"dev4@dev.com","password":"$2b$10$DD.hedXUs4OJa.DLjWstc.RVmaJ6wGn1TR.3qkKQhwykPKntFSlri","role":"member","_id":"bi0jQMMMFsUh9PnM"}
 {"name":"seniorrdev","email":"seniordev@dev.com","password":"$2b$10$x.cNyBFzOFJ4ilmk/UhGS.NpMFufdnaaJ9bA.kGUOSXBdcKiQoaDK","_id":"lDA2ryIYGpYplZ4g"}
 {"name":"dev","email":"dev@dev.com","password":"$2b$10$itXOrz036KUou0eTv1jpy.NaVHAFumiR703h36YSoo/NnrcODq/mO","_id":"tTo86qugzfnpYGyp"}

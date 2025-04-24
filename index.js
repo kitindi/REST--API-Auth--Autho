@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/auth/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res.status(422).json({ message: "Provide all fields" });
@@ -37,7 +37,7 @@ app.post("/api/auth/register", async (req, res) => {
     // hash the password
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await users.insert({ name, email, password: hashPassword });
+    const newUser = await users.insert({ name, email, password: hashPassword, role: role ?? "member" });
 
     return res.status(201).json({ message: "User registerd succesfully" });
   } catch (error) {
@@ -90,6 +90,23 @@ app.get("/api/users/current", ensureAuthentication, async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
+});
+
+function authorizeRole(roles = []) {
+  return async (req, res, next) => {
+    const user = await users.findOne({ _id: req.user.id });
+    if (!user || !roles.includes(user.role)) {
+      return res.status(403).json({ message: "Access denied" });
+    }
+    next();
+  };
+}
+
+app.get("/api/moderator", ensureAuthentication, authorizeRole(["admin", "moderator"]), (req, res) => {
+  return res.status(200).json({ message: "Admin  or Moderators only can access this route!" });
+});
+app.get("/api/admin", ensureAuthentication, authorizeRole(["admin"]), (req, res) => {
+  return res.status(200).json({ message: "Admin only can access this route!" });
 });
 
 app.listen(PORT, () => {
